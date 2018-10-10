@@ -13,7 +13,7 @@ Increasing use of social media is prooving handy to detect and analyse weather c
 
 Social media websites provide APIs which provide valuable data to monitor, detect and manage disasters.
 
-APIs will be used to monitor real-time tweets or posts, their geographic location and timestamp, filtered by relevant tags or keywords. The algorithm will analyse its authencity by monitoring other tweets or posts in the area.
+APIs will be used to monitor real-time tweets or posts, their geographic location and timestamp, filtered by relevant tags or keywords. We will be using DIP and NLP to understand the context of images and the related emotion.The algorithm will analyse its authencity by monitoring other tweets or posts in the area.
 
 Alert notification will be sent to users, NGOs and local authorities for immediate action. People can seek help from the nearby authorities and NGOs in the disaster-affected area via our [app]() or [website]() by pressing the SOS button and providing details if possible.
 
@@ -30,6 +30,7 @@ Details of the NGOs present in the affected location will be highlighted to faci
 * Python
 * Flask
 * Node.js
+* Tensor Flow
 * Android SDK
 * JAVA and Kotlin
 
