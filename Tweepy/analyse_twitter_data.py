@@ -127,11 +127,24 @@ if __name__ == "__main__":
     tweet_analyzer = TweetAnalyzer()
     api = twitter_client.get_twitter_client_api()
 
+    '''
     tweets = api.user_timeline(screen_name="realDonaldTrump", count=10)
     df = tweet_analyzer.tweets_to_data_frame(tweets)
     df['sentiment'] = np.array([tweet_analyzer.analyze_sentiment(tweet) for tweet in df['tweets']])
+    '''
 
-    print(df.head(10))
+    hash_tag_list = ["cyclone", "tsunami"]
+    fetched_tweets_filename = "tweets.txt"
+
+    twitter_streamer = TwitterStreamer()
+    twitter_streamer.stream_tweets(fetched_tweets_filename, hash_tag_list)
+
+    '''
+    twitter_client = TwitterClient('pycon')
+    print(twitter_client.get_user_timeline_tweets(1))
+    '''
+
+    # print(df.head(10))
     # Get average length over all tweets
     # print(np.mean(df['len']))
 
