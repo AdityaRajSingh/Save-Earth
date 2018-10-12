@@ -6,6 +6,7 @@ from tweepy import Stream
 import twitter_credentials
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 
 
 class TwitterClient:
@@ -98,6 +99,7 @@ class TweetAnalyzer:
         df['source'] = np.array([tweet.source for tweet in tweets])
         df['likes'] = np.array([tweet.favorite_count for tweet in tweets])
         df['retweets'] = np.array([tweet.retweet_count for tweet in tweets])
+        df['location'] = np.array([tweet.user.location for tweet in tweets])
 
         return df
 
@@ -107,8 +109,23 @@ if __name__ == "__main__":
     tweet_analyzer = TweetAnalyzer()
     api = twitter_client.get_twitter_client_api()
 
-    tweets = api.user_timeline(screen_name="tcsitwiz", count=20)
+    tweets = api.user_timeline(screen_name="realDonaldTrump", count=10)
     df = tweet_analyzer.tweets_to_data_frame(tweets)
 
     # Get average length over all tweets
-    print(np.mean(df['len']))
+    # print(np.mean(df['len']))
+
+    # Time Series
+    time_likes = pd.Series(data=df['likes'].values, index=df['date'])
+    time_likes.plot(figsize=(16, 4), label="likes", legend=True)
+
+    time_retweets = pd.Series(data=df['retweets'].values, index=df['date'])
+    time_retweets.plot(figsize=(16, 4), label="retweets", legend=True)
+
+    plt.show()
+
+    for tweet in tweets:
+        try:
+            print(tweet.user.location)
+        except AttributeError as e:
+            continue
