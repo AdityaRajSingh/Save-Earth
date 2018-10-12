@@ -110,12 +110,5 @@ if __name__ == "__main__":
     tweets = api.user_timeline(screen_name="tcsitwiz", count=20)
     df = tweet_analyzer.tweets_to_data_frame(tweets)
 
-    print(df.head(10))
-    # print(dir(tweets[0]))
-
-    for tweet in tweets:
-        try:
-            continue
-            # print(tweet.text)
-        except AttributeError as e:
-            continue
+    # Get average length over all tweets
+    print(np.mean(df['len']))
