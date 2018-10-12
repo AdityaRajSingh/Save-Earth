@@ -4,6 +4,8 @@ from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler
 from tweepy import Stream
 import twitter_credentials
+import numpy as np
+import pandas as pd
 
 
 class TwitterClient:
@@ -11,6 +13,9 @@ class TwitterClient:
         self.auth = TwitterAuthenticator().authenticate_twitter_app()
         self.twitter_client = API(self.auth)
         self.twitter_user = twitter_user
+
+    def get_twitter_client_api(self):
+        return self.twitter_client
 
     def get_user_timeline_tweets(self, num_tweets):
         tweets = []
@@ -20,13 +25,13 @@ class TwitterClient:
 
     def get_friend_list(self, num_friends):
         friend_list = []
-        for friend in Cursor(self.twitter_client.friends, id = self.twitter_user).items(num_friends):
+        for friend in Cursor(self.twitter_client.friends, id=self.twitter_user).items(num_friends):
             friend_list.append(friend)
         return friend_list
 
     def get_home_timeline_tweets(self, num_tweets):
         home_timeline_tweets = []
-        for tweet in Cursor(self.twitter_client.home_timeline, id = self.twitter_user).items(num_tweets):
+        for tweet in Cursor(self.twitter_client.home_timeline, id=self.twitter_user).items(num_tweets):
             home_timeline_tweets.append(tweet)
         return home_timeline_tweets
 
@@ -80,13 +85,32 @@ class TwitterListener(StreamListener):
         print(status_code)
 
 
+class TweetAnalyzer:
+    """
+    Functionality for analysing and categorizing content from tweets
+    """
+
+    def tweets_to_data_frame(self, tweets):
+        df = pd.DataFrame(data=[tweet.text for tweet in tweets], columns=['Tweets'])
+        df['id'] = np.array([tweet.id for tweet in tweets])
+
+        return df
+
+
 if __name__ == "__main__":
-    hash_tag_list = ["donald trump", "narendra modi"]
-    fetched_tweets_filename = "tweets.txt"
+    twitter_client = TwitterClient()
+    tweet_analyzer = TweetAnalyzer()
+    api = twitter_client.get_twitter_client_api()
 
-    # twitter_streamer = TwitterStreamer()
-    # twitter_streamer.stream_tweets(fetched_tweets_filename, hash_tag_list)
+    tweets = api.user_timeline(screen_name="tcsitwiz", count=20)
+    df = tweet_analyzer.tweets_to_data_frame(tweets)
 
-    twitter_client = TwitterClient('quizadnan')
-    for tweet in (twitter_client.get_user_timeline_tweets(10)):
-        print(tweet.text)
+    print(df.head(10))
+    # print(dir(tweets[0]))
+
+    for tweet in tweets:
+        try:
+            continue
+            # print(tweet.text)
+        except AttributeError as e:
+            continue
