@@ -108,7 +108,9 @@ class TweetAnalyzer:
             return -1
 
     def tweets_to_data_frame(self, tweets):
-        df = pd.DataFrame(data=[tweet.text for tweet in tweets], columns=['Tweets'])
+
+        df = pd.DataFrame(data=[tweet.text for tweet in tweets], columns=['tweets'])
+
         df['id'] = np.array([tweet.id for tweet in tweets])
         df['len'] = np.array([len(tweet.text) for tweet in tweets])
         df['date'] = np.array([tweet.created_at for tweet in tweets])
@@ -127,21 +129,28 @@ if __name__ == "__main__":
 
     tweets = api.user_timeline(screen_name="realDonaldTrump", count=10)
     df = tweet_analyzer.tweets_to_data_frame(tweets)
+    df['sentiment'] = np.array([tweet_analyzer.analyze_sentiment(tweet) for tweet in df['tweets']])
 
+    print(df.head(10))
     # Get average length over all tweets
     # print(np.mean(df['len']))
 
     # Time Series
+
+    '''
     time_likes = pd.Series(data=df['likes'].values, index=df['date'])
     time_likes.plot(figsize=(16, 4), label="likes", legend=True)
 
     time_retweets = pd.Series(data=df['retweets'].values, index=df['date'])
     time_retweets.plot(figsize=(16, 4), label="retweets", legend=True)
-
+    
     plt.show()
+    '''
 
+    '''
     for tweet in tweets:
         try:
             print(tweet.user.location)
         except AttributeError as e:
             continue
+    '''
