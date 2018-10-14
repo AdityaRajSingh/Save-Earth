@@ -10,8 +10,10 @@ import twitter_credentials
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import json
+import time
 
-
+t = time.time()
 class TwitterClient:
     def __init__(self, twitter_user=None):
         self.auth = TwitterAuthenticator().authenticate_twitter_app()
@@ -51,7 +53,6 @@ class TwitterStreamer:
     """
     Class for streaming and processing live tweets
     """
-
     def __init__(self):
         self.twitter_authenticator = TwitterAuthenticator()
 
@@ -75,12 +76,42 @@ class TwitterListener(StreamListener):
 
     def on_data(self, raw_data):
         try:
-            print(raw_data)
             with open(self.fetched_tweets_filename, 'a') as tf:
                 tf.write(raw_data)
+                data = json.loads(raw_data)
+                if 'text' in data:
+                    tweet = data["text"]
+                    created_at = data["created_at"]
+                    retweeted = data["retweeted"]
+                    username = data["user"]["screen_name"]
+                    user_tz = data["user"]["time_zone"]
+                    user_location = data["user"]["location"]
+                    user_coordinates = data["coordinates"]
+
+                    '''
+                    print(tweet)
+                    print(created_at)
+                    print(retweeted)
+                    print(username)
+                    print(user_tz)
+                    print(user_location)
+                    print(user_coordinates)
+                    print(dir(raw_data))
+                    '''
+
+                print(raw_data)
+
+                print ("XXXXXXXXXXXXX")
+                print("XXXXXXXXXXXXX")
+                print("XXXXXXXXXXXXX")
+
         except BaseException as e:
             print("Error on data: %s" % str(e))
-        return True
+
+        if time.time() - t < 30:
+            return True
+        else:
+            return False
 
     def on_error(self, status_code):
         if status_code == 420:
@@ -134,7 +165,7 @@ if __name__ == "__main__":
     '''
 
     hash_tag_list = ["cyclone", "tsunami"]
-    fetched_tweets_filename = "tweets.txt"
+    fetched_tweets_filename = "tweets1.txt"
 
     twitter_streamer = TwitterStreamer()
     twitter_streamer.stream_tweets(fetched_tweets_filename, hash_tag_list)
