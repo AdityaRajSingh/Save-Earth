@@ -6,12 +6,17 @@ from tweepy import Stream
 from textblob import TextBlob
 
 import re
-import twitter_credentials
+# import twitter_credentials
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import json
 import time
+
+ACCESS_TOKEN = "581748698-1LJbS70P4n6GtEP183RxHdIAheAq1OdKtLixp0CC"
+ACCESS_TOKEN_SECRET = "pqlelRZjldMwudZsh6wW1mULeeGykz2huHsn9A1MyrjwK"
+CONSUMER_KEY = "9dk7vTsNbET7e0YczCo3DInyY"
+CONSUMER_SECRET = "aL0F3NgYU27nWGmNa2erWbBUTxpnlRjtV4tPJA7F7U8ej1kCOs"
 
 t = time.time()
 class TwitterClient:
@@ -44,8 +49,8 @@ class TwitterClient:
 
 class TwitterAuthenticator:
     def authenticate_twitter_app(self):
-        auth = OAuthHandler(twitter_credentials.CONSUMER_KEY, twitter_credentials.CONSUMER_SECRET)
-        auth.set_access_token(twitter_credentials.ACCESS_TOKEN, twitter_credentials.ACCESS_TOKEN_SECRET)
+        auth = OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
+        auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
         return auth
 
 
