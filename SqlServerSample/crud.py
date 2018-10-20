@@ -12,7 +12,9 @@ tsql = "INSERT INTO Tweets (Id, Text, Location, Time) VALUES (?,?,?,?);"
 with cursor.execute(tsql, 1, 'Jake','United States', '9 PM'):
     print ('Successfuly Inserted!')
 
-# sqlcmd -S localhost -U sa -P DreamDare321 -Q "USE SampleDB; CREATE TABLE Tweets (SerialNo INT IDENTITY(1,1) NOT NULL PRIMARY KEY, Id INT, Text NVARCHAR(50), Location NVARCHAR(100), Time NVARCHAR(50));"
+# sqlcmd -S localhost -U sa -P DreamDare321 -Q "USE SampleDB; CREATE TABLE Tweets (SerialNo INT IDENTITY(1,1) NOT NULL PRIMARY KEY, Id INT, Text NVARCHAR(280), Location NVARCHAR(100), Time NVARCHAR(50));"
+# sqlcmd -S localhost -U sa -P DreamDare321 -Q "USE SampleDB; ALTER TABLE Tweets ALTER COLUMN Text NVARCHAR (500);"
+# sqlcmd -S . -d SampleDB -E -s',' -W -Q "SELECT * FROM TableName" > /Users/adnanazmat/Desktop/Tweets.csv
 
 #Update Query
 print ('Updating Location for Jake')
@@ -34,6 +36,3 @@ print ('Deleting user Jake')
 tsql = "DELETE FROM Tweets WHERE Text = ?"
 with cursor.execute(tsql,'Jake'):
     print ('Successfuly Deleted!')
-
-
-

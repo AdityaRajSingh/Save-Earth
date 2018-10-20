@@ -1,14 +1,15 @@
-from tweepy import API
-from tweepy import Cursor
+# from tweepy import API
+# from tweepy import Cursor
 from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler
 from tweepy import Stream
-from textblob import TextBlob
+# from textblob import TextBlob
 
-import re
+import pyodbc
+# import re
 # import twitter_credentials
-import numpy as np
-import pandas as pd
+# import numpy as np
+# import pandas as pd
 # import matplotlib.pyplot as plt
 # plt.use('TkAgg')
 import json
@@ -19,7 +20,16 @@ ACCESS_TOKEN_SECRET = "pqlelRZjldMwudZsh6wW1mULeeGykz2huHsn9A1MyrjwK"
 CONSUMER_KEY = "9dk7vTsNbET7e0YczCo3DInyY"
 CONSUMER_SECRET = "aL0F3NgYU27nWGmNa2erWbBUTxpnlRjtV4tPJA7F7U8ej1kCOs"
 
+server = 'localhost'
+database = 'SampleDB'
+username = 'sa'
+password = 'DreamDare321'
+cnxn = pyodbc.connect('DRIVER={ODBC Driver 13 for SQL Server};SERVER='+server+';PORT=1443;DATABASE='+database+';UID='+username+';PWD='+ password)
+cursor = cnxn.cursor()
+
 t = time.time()
+
+'''
 class TwitterClient:
     def __init__(self, twitter_user=None):
         self.auth = TwitterAuthenticator().authenticate_twitter_app()
@@ -46,7 +56,7 @@ class TwitterClient:
         for tweet in Cursor(self.twitter_client.home_timeline, id=self.twitter_user).items(num_tweets):
             home_timeline_tweets.append(tweet)
         return home_timeline_tweets
-
+'''
 
 class TwitterAuthenticator:
     def authenticate_twitter_app(self):
@@ -95,8 +105,6 @@ class TwitterListener(StreamListener):
                     user_coordinates = data["coordinates"]
 
                     '''
-                    print(tweet)
-                    print(created_at)
                     print(retweeted)
                     print(username)
                     print(user_tz)
@@ -105,18 +113,33 @@ class TwitterListener(StreamListener):
                     print(dir(raw_data))
                     '''
 
-                print(raw_data)
+                # Insert Query
+                if user_location is not None:
+                    tsql = "INSERT INTO Tweets (Id, Text, Location, Time) VALUES (?,?,?,?);"
+                    with cursor.execute(tsql, 1, str(tweet), str(user_location), str(created_at)):
+                        print('Successfuly Inserted!')
+
+                #print(raw_data)
 
                 print ("XXXXXXXXXXXXX")
-                print("XXXXXXXXXXXXX")
-                print("XXXXXXXXXXXXX")
+                print("\n")
 
         except BaseException as e:
             print("Error on data: %s" % str(e))
 
-        if time.time() - t < 30:
+        if time.time() - t < 10:
             return True
         else:
+            '''
+            print('Reading data from table')
+            tsql = "SELECT Text, Location FROM Tweets;"
+            print(time.time() - t)
+            with cursor.execute(tsql):
+                row = cursor.fetchone()
+                while row:
+                    print(str(row[0]) + " " + str(row[1]))
+                    row = cursor.fetchone()
+            '''
             return False
 
     def on_error(self, status_code):
@@ -125,7 +148,7 @@ class TwitterListener(StreamListener):
             return False
         print(status_code)
 
-
+'''
 class TweetAnalyzer:
     """
     Functionality for analysing and categorizing content from tweets
@@ -157,12 +180,12 @@ class TweetAnalyzer:
         df['location'] = np.array([tweet.user.location for tweet in tweets])
 
         return df
-
+'''
 
 if __name__ == "__main__":
-    twitter_client = TwitterClient()
-    tweet_analyzer = TweetAnalyzer()
-    api = twitter_client.get_twitter_client_api()
+    # twitter_client = TwitterClient()
+    # api = twitter_client.get_twitter_client_api()
+    # tweet_analyzer = TweetAnalyzer()
 
     '''
     tweets = api.user_timeline(screen_name="realDonaldTrump", count=10)
