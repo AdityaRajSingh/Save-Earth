@@ -165,7 +165,7 @@ class TwitterListener(StreamListener):
 
         global t
 
-        if (time.time() - t) > (86400 * 7):
+        if (time.time() - t) > 86400:
             cursor.execute("DELETE FROM Tweets WHERE Time < DATEADD(dd,-7,GETDATE());")
             t = time.time()
 
@@ -173,6 +173,7 @@ class TwitterListener(StreamListener):
             if time.time() - t < 10:
                 return True
             else:
+            '''
             '''
             print('Reading data from table')
             tsql = "SELECT Text, Location FROM tweets;"
@@ -182,6 +183,7 @@ class TwitterListener(StreamListener):
                 while row:
                     print(str(row[0]) + " " + str(row[1]))
                     row = cursor.fetchone()
+            '''
             '''
             return False
             '''
