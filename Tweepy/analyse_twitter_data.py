@@ -169,10 +169,10 @@ class TwitterListener(StreamListener):
             cursor.execute("DELETE FROM Tweets WHERE Time < DATEADD(dd,-7,GETDATE());")
             t = time.time()
 
-        '''
-        if time.time() - t < 10:
-            return True
-        else:
+            '''
+            if time.time() - t < 10:
+                return True
+            else:
             '''
             print('Reading data from table')
             tsql = "SELECT Text, Location FROM tweets;"
@@ -184,7 +184,7 @@ class TwitterListener(StreamListener):
                     row = cursor.fetchone()
             '''
             return False
-        '''
+            '''
 
     def on_error(self, status_code):
         if status_code == 420:
