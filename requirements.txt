@@ -1,0 +1,6 @@
+pyodbc
+tweepy
+textblob
+numpy
+pandas
+matplotlib
