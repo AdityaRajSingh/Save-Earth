@@ -4,3 +4,4 @@ textblob
 numpy
 pandas
 matplotlib
+python-dateutil

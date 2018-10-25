@@ -7,7 +7,7 @@ from tweepy import Stream
 
 # import re
 # import twitter_credentials
-# import numpy as np
+import numpy as np
 # import pandas as pd
 # import matplotlib.pyplot as plt
 # plt.use('TkAgg')
@@ -15,6 +15,7 @@ from tweepy import Stream
 import pyodbc
 import json
 import time
+from dateutil import parser
 
 ACCESS_TOKEN = "581748698-1LJbS70P4n6GtEP183RxHdIAheAq1OdKtLixp0CC"
 ACCESS_TOKEN_SECRET = "pqlelRZjldMwudZsh6wW1mULeeGykz2huHsn9A1MyrjwK"
@@ -31,6 +32,7 @@ cnxn = pyodbc.connect('DRIVER={ODBC Driver 13 for SQL Server};SERVER='+server+';
 cursor = cnxn.cursor()
 
 t = time.time()
+disasters = ["cyclone", "tsunami", "earthquake", "flood", "hurricane", "typhoon", "landslide"]
 
 '''
 class TwitterClient:
@@ -137,19 +139,37 @@ class TwitterListener(StreamListener):
                 '''
 
             # Insert Query
+
             if user_location is not None:
-                tsql = "INSERT INTO Tweets (Text, Location, Time) VALUES (?,?,?);"
-                with cursor.execute(tsql, str(tweet), str(user_location), str(created_at)):
+                # "created_at": "Thu Oct 25 14:17:34 +0000 2018", %
+                # 'Jun 1 2005  1:33PM', '%b %d %Y %I:%M%p'
+
+                counter = []
+                global disasters
+
+                for disaster in disasters:
+                    counter.append(tweet.count(disaster))
+                a = np.array(counter)
+                index = np.argmax(a)
+
+                tsql = "INSERT INTO Tweets (Disaster, Location, Time) VALUES (?,?,?);"
+                with cursor.execute(tsql, disasters[index], str(user_location), parser.parse(str(created_at))):
                     print('Successfuly Inserted!')
 
-            #print(raw_data)
-            print ("XXXXXXXXXXXXX")
+            # print(raw_data)
             print("\n")
 
 
         except BaseException as e:
             print("Error on data: %s" % str(e))
 
+        global t
+
+        if (time.time() - t) > (86400 * 7):
+            cursor.execute("DELETE FROM Tweets WHERE Time < DATEADD(dd,-7,GETDATE());")
+            t = time.time()
+
+        '''
         if time.time() - t < 10:
             return True
         else:
@@ -164,6 +184,7 @@ class TwitterListener(StreamListener):
                     row = cursor.fetchone()
             '''
             return False
+        '''
 
     def on_error(self, status_code):
         if status_code == 420:
@@ -216,12 +237,12 @@ if __name__ == "__main__":
     df['sentiment'] = np.array([tweet_analyzer.analyze_sentiment(tweet) for tweet in df['tweets']])
     '''
 
-    hash_tag_list = ["cyclone", "tsunami", "earthquake", "flood", "hurricane", "typhoons"]
+    hash_tag_list = ["cyclone", "tsunami", "earthquake", "flood", "hurricane", "typhoon", "landslide"]
+
     # fetched_tweets_filename = "tweets1.txt"
     # twitter_streamer.stream_tweets(fetched_tweets_filename, hash_tag_list)
     twitter_streamer = TwitterStreamer()
     twitter_streamer.stream_tweets(hash_tag_list)
-
     '''
     twitter_client = TwitterClient('pycon')
     print(twitter_client.get_user_timeline_tweets(1))
