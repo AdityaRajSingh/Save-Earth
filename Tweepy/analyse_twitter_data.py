@@ -166,7 +166,7 @@ class TwitterListener(StreamListener):
         global t
 
         if (time.time() - t) > 86400:
-            cursor.execute("DELETE FROM Tweets WHERE Time < DATEADD(dd,-7,GETDATE());")
+            cursor.execute("DELETE FROM Tweets WHERE Time < DATEADD(dd,-1,GETDATE());")
             t = time.time()
 
             '''
