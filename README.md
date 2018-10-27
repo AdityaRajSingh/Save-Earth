@@ -24,6 +24,7 @@ Details of the NGOs present in the affected location will be highlighted to faci
 [Download our app]() and get notified for disasters.
 
 [Visit our website]() and subscribe yourself to get alerts to your mobile phone as SMS or email address by providing a location.
+
 ## **Technology Stack**
 
 * Python
