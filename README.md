@@ -13,9 +13,9 @@ Increasing use of social media is prooving handy to detect and analyse weather c
 
 Social media websites provide APIs which provide valuable data to monitor, detect and manage disasters.
 
-APIs will be used to monitor real-time tweets or posts, their geographic location and timestamp, filtered by relevant tags or keywords. We will be using DIP and NLP to understand the context of images and the related emotion.The algorithm will analyse its authencity by monitoring other tweets or posts in the area.
+APIs will be used to monitor real-time tweets or posts, their geographic location and timestamp, filtered by relevant tags or keywords. We will be using Sentiment Analysis for weight.
 
-Alert notification will be sent to users, NGOs and local authorities for immediate action. People can seek help from the nearby authorities and NGOs in the disaster-affected area via our [app]() or [website]() by pressing the SOS button and providing details if possible.
+Alert notification will be sent to users, for immediate action. People can also report a disaster.
 
 Details of the NGOs present in the affected location will be highlighted to facilitate donation.
 
@@ -23,20 +23,17 @@ Details of the NGOs present in the affected location will be highlighted to faci
 
 [Download our app]() and get notified for disasters.
 
-[Visit our website]() and subscribe yourself to get alerts to your mobile phone or email address by providing a location. Disaster alerts will be sent to registered people, local authorities and NGOs.
-
+[Visit our website]() and subscribe yourself to get alerts to your mobile phone as SMS or email address by providing a location.
 ## **Technology Stack**
 
 * Python
-* Flask
-* Node.js
-* Tensor Flow
+* Node.js, HTML, CSS
+* TextBlob
 * Android SDK
 * JAVA and Kotlin
 
-## **APIs and Datasources**
+## **APIs Datasources and Libraries**
 
 * [Twitter API](https://developer.twitter.com/en/docs.html)
-* [Facebook Disaster Maps](https://research.fb.com/facebook-disaster-maps-methodology/)
-* [Instagram API](https://www.instagram.com/developer/)
-* [Google Trends](https://github.com/GeneralMills/pytrends)
+* Twilio
+* [Geopy](https://geopy.readthedocs.io/en/stable/)
