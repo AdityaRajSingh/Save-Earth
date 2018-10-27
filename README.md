@@ -1,4 +1,4 @@
-# Monitoring Social Media for Disaster Detection and Management
+# Monitoring Social Media for Disaster Alert and Management
 
 ## **Introduction**
 
