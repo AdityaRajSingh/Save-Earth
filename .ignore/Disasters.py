@@ -31,9 +31,3 @@ class Disaster:
 
         distance = R * c
         return distance
-
-
-class Earthquake(Disaster):
-    def __int__(self, disaster_type, time, location, affected_areas):
-        super().__init__(disaster_type, time, location)
-        affected_areas = []
