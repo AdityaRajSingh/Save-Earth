@@ -21,9 +21,9 @@ Details of the NGOs present in the affected location will be highlighted to faci
 
 ## **Getting Started**
 
-[Download our app]() and get notified for disasters.
+[Download our app](https://www.mediafire.com/file/lb7k146air1q46l/app-debug.apk/file) and get notified for disasters.
 
-[Visit our website]() and subscribe yourself to get alerts to your mobile phone as SMS or email address by providing a location.
+[Visit our website](http://save-earth-node.azurewebsites.net) and subscribe yourself to get alerts to your mobile phone as SMS or email address by providing a location.
 
 ## **Technology Stack**
 
@@ -38,3 +38,4 @@ Details of the NGOs present in the affected location will be highlighted to faci
 * [Twitter API](https://developer.twitter.com/en/docs.html)
 * [Twilio](https://www.twilio.com/)
 * [Geopy](https://geopy.readthedocs.io/en/stable/)
+* [TextBlob](https://textblob.readthedocs.io/en/dev/)
