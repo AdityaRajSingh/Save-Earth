@@ -5,9 +5,8 @@ from string import Template
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-MY_ADDRESS = 'adnanazmat.is.cool@outlook.com'
-PASSWORD = 'nokialumia920'
-# mm
+MY_ADDRESS = 'adnanazmat.is.cool@gmail.com'
+PASSWORD = 'DreamDare321'
 
 
 def get_contacts(filename):
@@ -16,8 +15,8 @@ def get_contacts(filename):
     read from a file specified by filename.
     """
 
-    names = ['Adnan', 'Kamran']
-    emails = ['adnanazmat.is.cool@gmail.com', 'azmat.kamran@gmail.com']
+    names = ['Adnan', 'Utkarsh']
+    emails = ['adnanazmat.is.cool@gmail.com', 'utkryuk@gmail.com']
 
     '''
     with open(filename, mode='r', encoding='utf-8') as contacts_file:
@@ -46,13 +45,12 @@ def main():
     message_template = read_template('message.txt')
     '''
 
-    names = ['Adnan', 'Kamran']
-    emails = ['adnanazmat.is.cool@gmail.com', 'azmat.kamran@gmail.com']
+    names = ['Adnan', 'Utkarsh']
+    emails = ['adnanazmat.is.cool@gmail.com', 'utkryuk@gmail.com']
 
 
     # set up the SMTP server
-    s = smtplib.SMTP(host='smtp-mail.outlook.com', port=587)
-    s.starttls()
+    s = smtplib.SMTP_SSL('smtp.gmail.com')
     s.login(MY_ADDRESS, PASSWORD)
 
     # For each contact, send the email:
@@ -60,7 +58,7 @@ def main():
         msg = MIMEMultipart()  # create a message
 
         # add in the actual person name to the message template
-        message = 'Hi. Adnan sending this from Python'
+        message = 'There is an earthquake alert in your area. Team Save-Earth.'
 
         # Prints out the message body for our sake
         print(message)
@@ -68,7 +66,7 @@ def main():
         # setup the parameters of the message
         msg['From'] = MY_ADDRESS
         msg['To'] = email
-        msg['Subject'] = "This is TEST"
+        msg['Subject'] = "Earthquake Alert"
 
         # add in the message body
         msg.attach(MIMEText(message, 'plain'))

@@ -1,5 +1,8 @@
 # Monitoring Social Media for Disaster Alert and Management
 
+
+[Check this presentaion to understand our project](https://docs.google.com/presentation/d/1mi4Z_fpqYGqxOLlOKdvT-sFbU-5yCXjqb4-jJmKU0Q0/edit?usp=sharing)
+
 ## **Introduction**
 
 

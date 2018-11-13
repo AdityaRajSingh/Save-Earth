@@ -15,5 +15,5 @@ client = Client(account_sid, auth_token)
 client.messages.create(
     to = "+917070241542",
     from_ = "+18594487713",
-    body = "Adnan here"
+    body = "There is an earthquake alert in your area. Team Save-Earth."
 )
